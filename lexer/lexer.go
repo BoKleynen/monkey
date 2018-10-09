@@ -1,12 +1,15 @@
 package lexer
 
-import "monkey/token"
+import (
+	"monkey/token"
+	"unicode/utf8"
+)
 
 type Lexer struct {
 	input        string
 	position     int  // current position in input (points to current char)
 	readPosition int  // current reading position in input (after current char)
-	ch           byte // current char under examination
+	ch           rune // current char under examination
 }
 
 func New(input string) *Lexer {
@@ -85,13 +88,14 @@ func (l *Lexer) NextToken() token.Token {
 }
 
 func (l *Lexer) readChar() {
+	var size int
 	if l.readPosition >= len(l.input) {
 		l.ch = 0
 	} else {
-		l.ch = l.input[l.readPosition]
+		l.ch, size = utf8.DecodeRuneInString(l.input[l.readPosition:])
 	}
 	l.position = l.readPosition
-	l.readPosition++
+	l.readPosition += size
 }
 
 func (l *Lexer) readNumber() string {
@@ -110,23 +114,24 @@ func (l *Lexer) readIdentifier() string {
 	return l.input[position:l.position]
 }
 
-func (l *Lexer) peakChar() byte {
+func (l *Lexer) peakChar() rune {
 	if l.readPosition >= len(l.input) {
 		return 0
 	} else {
-		return l.input[l.readPosition]
+		r, _ := utf8.DecodeRuneInString(l.input[l.readPosition:])
+		return r
 	}
 }
 
-func newToken(tokenType token.TokenType, ch byte) token.Token {
+func newToken(tokenType token.TokenType, ch rune) token.Token {
 	return token.Token{Type: tokenType, Literal: string(ch)}
 }
 
-func isLetter(ch byte) bool {
+func isLetter(ch rune) bool {
 	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_'
 }
 
-func isDigit(ch byte) bool {
+func isDigit(ch rune) bool {
 	return '0' <= ch && ch <= '9'
 }
 
