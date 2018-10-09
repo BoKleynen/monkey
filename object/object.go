@@ -5,9 +5,9 @@ import "fmt"
 type Type string
 
 const (
-	INTEGER_OBJ = "INTEGER"
-	BOOLEAN_OBJ = "BOOLEAN"
-	NULL_OBJ    = "NULL"
+	INTEGER_OBJ      = "INTEGER"
+	BOOLEAN_OBJ      = "BOOLEAN"
+	NULL_OBJ         = "NULL"
 	RETURN_VALUE_OBJ = "RETURN_VALUE"
 )
 
@@ -35,9 +35,9 @@ type Null struct{}
 func (n *Null) Type() Type      { return NULL_OBJ }
 func (n *Null) Inspect() string { return "null" }
 
-// type ReturnObject struct {
-// 	Value Object
-// }
-//
-// func (rv *ReturnObject) Type() Type { return RETURN_VALUE_OBJ }
-// func (rv *ReturnObject) Inspect() string { return rv.Value.Inspect() }
+type ReturnValue struct {
+	Value Object
+}
+
+func (rv *ReturnValue) Type() Type      { return RETURN_VALUE_OBJ }
+func (rv *ReturnValue) Inspect() string { return rv.Value.Inspect() }
