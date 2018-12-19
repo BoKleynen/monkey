@@ -20,7 +20,7 @@ const (
 	STRING_OBJ       = "STRING"
 	BUILTIN_OBJ      = "BUILTIN"
 	ARRAY_OBJ        = "ARRAY"
-	HASH_OBJ = "HASH"
+	HASH_OBJ         = "HASH"
 )
 
 type Object interface {
@@ -171,7 +171,7 @@ func (ao *Array) Inspect() string {
 }
 
 type HashKey struct {
-	Type Type
+	Type  Type
 	Value uint64
 }
 
@@ -180,7 +180,7 @@ type Hashable interface {
 }
 
 type HashPair struct {
-	Key Object
+	Key   Object
 	Value Object
 }
 
