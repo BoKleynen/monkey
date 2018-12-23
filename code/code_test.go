@@ -30,9 +30,9 @@ func TestMake(t *testing.T) {
 }
 
 func TestReadOperands(t *testing.T) {
-	tests := []struct{
-		op Opcode
-		operands []int
+	tests := []struct {
+		op        Opcode
+		operands  []int
 		bytesRead int
 	}{
 		{OpConstant, []int{65535}, 2},
@@ -51,7 +51,7 @@ func TestReadOperands(t *testing.T) {
 			t.Fatalf("n wrong. want=%d, got=%d", tt.bytesRead, n)
 		}
 
-		for i, want	:= range tt.operands {
+		for i, want := range tt.operands {
 			if operandsRead[i] != want {
 				t.Errorf("operand wrong. want=%d, got=%d", want, operandsRead[i])
 			}
