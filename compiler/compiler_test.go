@@ -174,6 +174,39 @@ func TestBooleanExpression(t *testing.T) {
 	runCompilerTests(t, tests)
 }
 
+func TestConditionals(t *testing.T) {
+	tests := []compilerTestCase{
+		{
+			input: `if (true) { 10 }; 3333;`,
+			expectedConstants: []interface{}{10, 3333},
+			expectedInstructions: []code.Instructions{
+				code.Make(code.OpTrue),             // 0000
+				code.Make(code.OpJumpNotTruthy, 7), // 0001
+				code.Make(code.OpConstant, 0),      // 0004
+				code.Make(code.OpPop),              // 0007
+				code.Make(code.OpConstant, 1),      // 0008
+				code.Make(code.OpPop),              // 0011
+			},
+		},
+		{
+			input: `if (true) { 10 } else { 20 }; 3333;`,
+			expectedConstants: []interface{}{10, 20, 3333},
+			expectedInstructions: []code.Instructions{
+				code.Make(code.OpTrue),             	// 0000
+				code.Make(code.OpJumpNotTruthy, 10), 	// 0001
+				code.Make(code.OpConstant, 0),      	// 0004
+				code.Make(code.OpJump, 13),				// 0007
+				code.Make(code.OpConstant, 1),      	// 0010
+				code.Make(code.OpPop),              	// 0013
+				code.Make(code.OpConstant, 2),      	// 0014
+				code.Make(code.OpPop),              	// 0017
+			},
+		},
+	}
+
+	runCompilerTests(t, tests)
+}
+
 func runCompilerTests(t *testing.T, tests []compilerTestCase) {
 	t.Helper()
 
@@ -217,7 +250,7 @@ func testInstructions(expected []code.Instructions, actual code.Instructions) er
 	for i, ins := range concatted {
 		if actual[i] != ins {
 			return fmt.Errorf("wrong instruction at %d.\nwant=%q \ngot=%q",
-				i, concatted, actual[i])
+				i, concatted, actual)
 		}
 	}
 
@@ -243,7 +276,7 @@ func testConstants(t *testing.T, expected []interface{}, actual []object.Object)
 	for i, constant := range expected {
 		switch constant := constant.(type) {
 		case int:
-			err := testIntegerObejct(int64(constant), actual[i])
+			err := testIntegerObject(int64(constant), actual[i])
 			if err != nil {
 				return fmt.Errorf("constant %d - testIntegerObject failed: %s",
 					i, err)
@@ -254,7 +287,7 @@ func testConstants(t *testing.T, expected []interface{}, actual []object.Object)
 	return nil
 }
 
-func testIntegerObejct(expected int64, actual object.Object) error {
+func testIntegerObject(expected int64, actual object.Object) error {
 	result, ok := actual.(*object.Integer)
 	if !ok {
 		return fmt.Errorf("object is not an Integer. got=%T (%+v)",
