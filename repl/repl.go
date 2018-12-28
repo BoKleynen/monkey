@@ -20,7 +20,6 @@ func Start(in io.Reader, out io.Writer) {
 	globals := make([]object.Object, vm.GlobalsSize)
 	symbolTable := compiler.NewSymbolTable()
 
-
 	for {
 		fmt.Printf(PROMPT)
 		scanned := scanner.Scan()
