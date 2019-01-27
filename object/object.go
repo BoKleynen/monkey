@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"hash/fnv"
 	"monkey/ast"
+	"monkey/code"
 	"strings"
 )
 
@@ -21,6 +22,7 @@ const (
 	BuiltinObj             = "BUILTIN"
 	ArrayObj               = "ARRAY"
 	HashObj                = "HASH"
+	CompiledFunctionObject = "COMPILED_FUNCTION_OBJECT"
 )
 
 type Object interface {
@@ -203,4 +205,13 @@ func (h *Hash) Inspect() string {
 	out.WriteString("}")
 
 	return out.String()
+}
+
+type CompiledFunction struct {
+	Instructions code.Instructions
+}
+
+func (cf *CompiledFunction) Type() Type { return CompiledFunctionObject }
+func (cf *CompiledFunction) Inspect() string {
+	return fmt.Sprintf("compiledFunction[%p]", cf)
 }
