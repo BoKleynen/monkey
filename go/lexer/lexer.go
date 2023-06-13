@@ -1,8 +1,9 @@
 package lexer
 
 import (
-	"monkey/token"
 	"unicode/utf8"
+
+	"github.com/BoKleynen/monkey/token"
 )
 
 type Lexer struct {

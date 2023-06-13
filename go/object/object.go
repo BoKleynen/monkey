@@ -4,23 +4,24 @@ import (
 	"bytes"
 	"fmt"
 	"hash/fnv"
-	"monkey/ast"
 	"strings"
+
+	"github.com/BoKleynen/monkey/ast"
 )
 
 type Type string
 
 const (
-	IntegerObj             = "INTEGER"
-	BooleanObj             = "BOOLEAN"
-	NullObj                = "NULL"
-	ReturnValueObj         = "RETURN_VALUE"
-	ErrorObj               = "ERROR"
-	FunctionObj            = "FUNCTION"
-	StringObj              = "STRING"
-	BuiltinObj             = "BUILTIN"
-	ArrayObj               = "ARRAY"
-	HashObj                = "HASH"
+	IntegerObj     = "INTEGER"
+	BooleanObj     = "BOOLEAN"
+	NullObj        = "NULL"
+	ReturnValueObj = "RETURN_VALUE"
+	ErrorObj       = "ERROR"
+	FunctionObj    = "FUNCTION"
+	StringObj      = "STRING"
+	BuiltinObj     = "BUILTIN"
+	ArrayObj       = "ARRAY"
+	HashObj        = "HASH"
 )
 
 type Object interface {

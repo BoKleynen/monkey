@@ -2,10 +2,11 @@ package compiler
 
 import (
 	"fmt"
-	"monkey/ast"
-	"monkey/code"
-	"monkey/object"
 	"sort"
+
+	"github.com/BoKleynen/monkey/ast"
+	"github.com/BoKleynen/monkey/code"
+	"github.com/BoKleynen/monkey/object"
 )
 
 type EmittedInstruction struct {

@@ -2,12 +2,13 @@ package vm
 
 import (
 	"fmt"
-	"monkey/ast"
-	"monkey/compiler"
-	"monkey/lexer"
-	"monkey/object"
-	"monkey/parser"
 	"testing"
+
+	"github.com/BoKleynen/monkey/ast"
+	"github.com/BoKleynen/monkey/compiler"
+	"github.com/BoKleynen/monkey/lexer"
+	"github.com/BoKleynen/monkey/object"
+	"github.com/BoKleynen/monkey/parser"
 )
 
 func TestIntegerArithmetic(t *testing.T) {

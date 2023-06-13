@@ -2,8 +2,9 @@ package evaluator
 
 import (
 	"fmt"
-	"monkey/ast"
-	"monkey/object"
+
+	"github.com/BoKleynen/monkey/ast"
+	"github.com/BoKleynen/monkey/object"
 )
 
 var (
